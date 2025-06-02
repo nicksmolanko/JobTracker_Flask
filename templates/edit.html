@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Job</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Edit Job Application</h1>
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="notification is-danger">
+                {{ messages[0] }}
+            </div>
+            {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('edit_job', id=job.id) }}">
+                <div class="field">
+                    <label class="label">Company</label>
+                    <div class="control">
+                        <input class="input" type="text" name="company" value="{{ job.company }}" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Position</label>
+                    <div class="control">
+                        <input class="input" type="text" name="position" value="{{ job.position }}" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Status</label>
+                    <div class="control">
+                        <div class="select">
+                            <select name="status">
+                                <option value="Applied" {% if job.status=='Applied' %}selected{% endif %}>Applied
+                                </option>
+                                <option value="Interviewed" {% if job.status=='Interviewed' %}selected{% endif %}>
+                                    Interviewed</option>
+                                <option value="Accepted" {% if job.status=='Accepted' %}selected{% endif %}>Accepted
+                                </option>
+                                <option value="Declined" {% if job.status=='Declined' %}selected{% endif %}>Declined
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button type="submit" class="button is-primary">Update Job</button>
+                    </div>
+                    <div class="control">
+                        <a href="{{ url_for('index') }}" class="button is-link is-light">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</body>
+
+</html>
